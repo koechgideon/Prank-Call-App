@@ -1,0 +1,5 @@
+env 
+*.sqllite3
+*.pyc
+__pychache__
+media/**
