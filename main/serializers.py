@@ -50,9 +50,6 @@ class OtpSerializer(serializers.ModelSerializer):
             settings.VERIFY_SERVICE_SID
         ).verifications.create(
             to=phone_no,
-            # "+254798950450",  # for cephas
-            # "+254715612073",  # for dommie
-            # "+254768379937", # for Bruno
             channel="sms",
         )
 

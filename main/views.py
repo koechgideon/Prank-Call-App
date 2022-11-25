@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse
 from rest_framework import generics, permissions, views, viewsets
+from django.conf import settings
 
 from main.twilio_client import client
 
@@ -16,7 +17,7 @@ from main.serializers import (
 )
 
 
-# Create your views here.
+
 class UserViewSet(viewsets.ModelViewSet):
     # API endpoint that allows users to be viewed or edited.
 
@@ -54,26 +55,13 @@ class MakeCall(views.APIView):
 
         call = client.calls.create(
             record=True,
-            # method="GET",
-            # status_callback="http://4e39-102-69-225-87.in.ngrok.io/events",
-            # status_callback_event=["initiated", "answered"],
-            # status_callback_method="POST",
-            url="http://9f04-102-69-225-87.in.ngrok.io/media/audio/just-the-3-of-us-prank.mp3",
-            # for work owner
-            # to="+254715612073",
-            # to="+254768379937", # for Bruno
-            # to="+254798950450",  # for ceph
-            # to="+13392184327", #for Daze Twillio
-            # to="+447306107662",  # for Daze
+            method="GET",
+            status_callback="",
+            status_callback_event=["initiated", "answered"],
+            status_callback_method="POST",
+            url="127.0.0.0.8000/media/audio/just-the-3-of-us-prank.mp3",
             to=phone_no,
-            # to='+18592513806' #for Dommie Twillio
-            # from_="+441274015884",  # for Daze
-            # from_="+15005550006",
-            # from_="+447306107662",  # for Daze
-            # from_="+18592513806",  # for Dommie Twillio
-            # from_="+447306107672",  # for Daze Personal number
-            from_="+13392184327",  # for Daze Twillio
-            # from_="+447360278683",  # for Dommie Personal number 447360278683
+            from_="+19498285956", 
             twiml="<Response><Play>{audio_url}</Play></Response>".format(
                 audio_url=audio_url
             ),
@@ -92,17 +80,11 @@ class MakeCall(views.APIView):
 
 class _PhoneVerification(views.APIView):
     def post(self, request, *args, **kwargs):
-        # phone_no = request.data.get("phone_no", None)
-        # otpdata = client.verify.v2.services(
-        #     settings.VERIFY_SERVICE_SID
-        # ).verifications.create(
-        #     to=
-        #     # "+254798950450",  # for cephas
-        #     # "+254715612073",  # for dommie
-        #     # "+254768379937", # for Bruno
-        #     phone_no,
-        #     channel="sms",
-        # )
+        phone_no = request.data.get("phone_no", None)
+        otpdata = client.verify.v2.services(settings.VERIFY_SERVICE_SID ).verifications.create(
+        to=phone_no,
+        channel="sms",
+         )
 
         OtpSerializer(
             data={
