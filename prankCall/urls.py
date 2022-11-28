@@ -25,7 +25,7 @@ router = routers.DefaultRouter()
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(router.urls)),
+    #path('', include(router.urls)),
     path('', include('main.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -62,7 +62,3 @@ class Otp(models.Model):
 #     image =  models.ImageField(upload_to = 'image/')
 #     audio =  models.FileField(upload_to = 'audio/')
 #     description =  models.CharField(max_length=50)
-
-
-class Tokens (models.Model):
-    pass
